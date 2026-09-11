@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'com.baudocapitao'
@@ -34,4 +35,24 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'AzureArtifacts'
+            url = uri(System.getenv('AZURE_ARTIFACTS_FEED_URL') ?: 
+                    'https://pkgs.dev.azure.com/eduardoleite0637/ai/_packaging/ArquiteturaBauCapitao/maven/v1')
+            credentials {
+                username = System.getenv('AZURE_ARTIFACTS_USERNAME') ?: 'AzureDevOps'
+                password = System.getenv('AZURE_ARTIFACTS_TOKEN')
+            }
+        }
+    }
 }
