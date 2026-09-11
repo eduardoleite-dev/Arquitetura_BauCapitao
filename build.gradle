@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.baudocapitao'
+version = '0.1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api platform('org.springframework.boot:spring-boot-dependencies:3.3.5')
+    api 'org.springframework:spring-context'
+    api 'org.springframework:spring-web'
+    api 'org.springframework.security:spring-security-core'
+    api 'org.springframework.security:spring-security-web'
+    api 'org.springframework.security:spring-security-config'
+    api 'io.jsonwebtoken:jjwt-api:0.12.6'
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.5'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
